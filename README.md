@@ -13,3 +13,4 @@ Was an ex-Proffesional Gamer of VALORANT And CS:GO
 # This Repo : About
 This is a Repository , for storing and keeping track of my java programs. 
 Here You can find different questions based on different categories.
+And Basic Concept and Algorithms.
