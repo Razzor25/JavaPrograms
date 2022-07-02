@@ -3,7 +3,7 @@
 # About Me
 
 My age: 22 Y/O @[2022]
-
+My GFG: https://auth.geeksforgeeks.org/user/codeyourself/profile
 My E-mail: satyaranjanrayrazzor@gmail.com
 
 Currently Pursuing Master of computer application (MCA) From KIIT University , Bhubaneswar.
