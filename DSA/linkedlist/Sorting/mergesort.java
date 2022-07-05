@@ -12,51 +12,84 @@ class mergesort{
         n2.next=n3;
         n3.next=n4;
         n4.next=n5;
-        // display(h);
-        ms(h);
-    }
-    public static void ms(Node h)
-    {
         display(h);
-        if(h==null|| h.next==null)
-        return;
-        Node curr=h;
-        Node mid=findMiddle(curr);
-       
-        
-        ms(mid.next);
-        mid.next=null;
-        ms(curr);
-        
+        // System.out.println(t.data);
+        h=ms(h);
+        display(h);
         
     }
-    //42 11
-    //    
-    //    s  f
-    public static Node findMiddle(Node curr)
+    public static Node ms(Node h)
     {
-       Node s=curr;
-       Node f=curr;
-        while(f!=null)
-        {
-            f=f.next;
-            if(f!=null){
-            s=s.next;
-            f=f.next;
-            }
+        // Base case : if head is null
+        if (h == null || h.next == null) {
+            return h;
         }
-        return s;
-         
+ 
+        // get the middle of the list
+        Node middle = findMiddle(h);
+        Node nextofmiddle = middle.next;
+ 
+        // set the next of middle node to null
+        middle.next = null;
+ 
+        // Apply mergeSort on left list
+        Node left = ms(h);
+ 
+        // Apply mergeSort on right list
+        Node right = ms(nextofmiddle);
+ 
+        // Merge the left and right lists
+        Node sortedlist = sortedMerge(left, right);
+        return sortedlist;
     }
-    public static void display(Node head)
+    public static Node sortedMerge(Node a, Node b)
     {
-        Node curr=head;
+        Node result = null;
+        /* Base cases */
+        if (a == null)
+            return b;
+        if (b == null)
+            return a;
+ 
+        /* Pick either a or b, and recur */
+        if (a.data <= b.data) {
+            result = a;
+            result.next = sortedMerge(a.next, b);
+        }
+        else {
+            result = b;
+            result.next = sortedMerge(a, b.next);
+        }
+        return result;
+    }
+    public static void display(Node ref)
+    {
+        Node curr=ref;
         while(curr!=null)
         {
             System.out.print(curr.data+"->");
             curr=curr.next;
         }
-        System.out.println("NULL");
+        System.out.println("Null");
+    }
+    public static Node findMiddle(Node head)
+    {
+       if (head == null)
+            return head;
+ 
+        Node slow = head, fast = head.next;
+ 
+       while(fast!=null)
+       {
+        fast=fast.next;
+        if(fast!=null)
+        {
+            fast=fast.next;
+            slow=slow.next;
+        }
+       }
+        return slow;
+        
     }
 }
 class Node{
