@@ -1,5 +1,5 @@
 # Hi There 👋 I'm Satya!
-# UPDATING FINE 
+# This is just to keep Track of my Java Codes , basic and required Algorithms! 
 # About Me
 
 My age: 22 Y/O @[2022]
