@@ -1,16 +1,49 @@
-# Hi There 👋 I'm Satya!
-# This is just to keep Track of my Java Codes , basic and required Algorithms! 
-# About Me
+uploadFile(file: File, metadata: any = {}): Observable<any> {
+    return new Observable<any>(subscription => {
+      this.getAuthHeader().subscribe(tkn => {
+        //get blob URL
+        const initBody = {
+          "expiryDate": "2030/12/28",
+          "externalId": "1",
+          "fileName": file.name,
+          "virusScanStatus": "false"
+        }
+        // Goes to DMS, Get file Metadata & Blob URL
+        this.httpClient.post(this.httpUrl, initBody, {
+          headers: new HttpHeaders({ Authorization: tkn }),
+          params: {
+            metadata: JSON.stringify(metadata),
+            searchTerms: ""
+          }
+        }).subscribe(metaInfo => {
 
-My age: 22 Y/O @[2022]
-My GFG: https://auth.geeksforgeeks.org/user/codeyourself/profile
-My E-mail: satyaranjanrayrazzor@gmail.com
-
-Currently Pursuing Master of computer application (MCA) From KIIT University , Bhubaneswar.
-I love teaching DSA,Java,Etc.. 
-Was an ex-Proffesional Gamer of VALORANT And CS:GO
-
-# This Repo : About
-This is a Repository , for storing and keeping track of my java programs. 
-Here You can find different questions based on different categories.
-And Basic Concept and Algorithms.
+          const blobUrl = metaInfo["attachments"][0].url;
+          // Posting File Data to Bobl URL
+          this.httpClient.put(blobUrl, file, {
+            headers: {
+              "x-ms-blob-type": "BlockBlob",
+              "x-ms-blob-content-disposition": "attachment" // Needed for download functionality
+            },
+            observe: 'events',
+            reportProgress: true
+          }).subscribe(blobRes => {
+            if (blobRes.type === HttpEventType.UploadProgress) {
+              subscription.next(blobRes)            }
+            if (blobRes.type === HttpEventType.Response) {
+              subscription.next({...blobRes, body: {...metaInfo}})
+              subscription.complete();
+            }
+          }, err => {
+            subscription.error(err)
+            subscription.complete();
+          })
+        }, err => {
+          subscription.error(err)
+          subscription.complete();
+        })
+      }, err => {
+        subscription.error(err)
+        subscription.complete();
+      })
+    })
+  }
