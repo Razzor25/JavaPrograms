@@ -1,12 +1,1 @@
-CREATE VIEW qom_workqueue_summary
-AS 
-SELECT 
-ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) as view_id,
-wq.workqueue_id, wq.workqueue_name, int.org_id,
-count(int.interaction_id) as cdo_based_tasks,
-SUM(count(int.interaction_id)) OVER (PARTITION BY wq.workqueue_id) as total_tasks
-from public.workqueue wq 
-JOIN public.qom_interactions int on wq.workqueue_id=int.workqueue_id
-WHERE int.int_status_id IN (1000882,1000936) 
-GROUP by (wq.workqueue_id,int.org_id);
--- Here 1000882 and 1000936 is INPROGRESS AND SCHEDULED STATUS of INTERACTIONS 
+org.springframework.aop.framework.ProxyFactory: 3 interfaces [com.optum.ecp.curo.qom.jpa.repository.QomWQSummaryRepo, org.springframework.data.repository.Repository, org.springframework.transaction.interceptor.TransactionalProxy]; 8 advisors [org.springframework.aop.interceptor.ExposeInvocationInterceptor.ADVISOR, org.springframework.aop.support.DefaultPointcutAdvisor: pointcut [Pointcut.TRUE]; advice [org.springframework.data.jpa.repository.support.CrudMethodMetadataPostProcessor$CrudMethodMetadataPopulatingMethodInterceptor@47df068a], org.springframework.aop.support.DefaultPointcutAdvisor: pointcut [Pointcut.TRUE]; advice [org.springframework.dao.support.PersistenceExceptionTranslationInterceptor@12669200], org.springframework.aop.support.DefaultPointcutAdvisor: pointcut [Pointcut.TRUE]; advice [org.springframework.transaction.interceptor.TransactionInterceptor@5e1d11db], org.springframework.aop.support.DefaultPointcutAdvisor: pointcut [Pointcut.TRUE]; advice [org.springframework.data.projection.DefaultMethodInvokingMethodInterceptor@5c19194c], org.springframework.aop.support.DefaultPointcutAdvisor: pointcut [Pointcut.TRUE]; advice [org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor@63cdaf13], org.springframework.aop.support.DefaultPointcutAdvisor: pointcut [Pointcut.TRUE]; advice [org.springframework.data.repository.core.support.RepositoryFactorySupport$ImplementationMethodExecutionInterceptor@451dc7f8], org.springframework.dao.annotation.PersistenceExceptionTranslationAdvisor@7c588adc]; targetSource [SingletonTargetSource for target object [org.springframework.data.jpa.repository.support.SimpleJpaRepository@6e93f6ff]]; proxyTargetClass=false; optimize=false; opaque=false; exposeProxy=false; frozen=false
