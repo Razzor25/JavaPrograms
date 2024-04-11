@@ -1,1 +1,12 @@
-{"query":"query (\n      $limit: Int!,\n      $offset: Int!,\n      $order: [user_cli_func_role_req_order_by!],\n      $where: user_cli_func_role_req_bool_exp\n    ) {\n      count: user_cli_func_role_req_aggregate (where: $where) {\n        aggregate {\n          count\n        }\n      }\n      data: user_cli_func_role_req(where: $where, limit: $limit, offset: $offset, order_by: $order) {\n        \n      client:cli_org {\n        name: org_nm\n        clientId: cli_org_id\n      }\n      role: cli_func_role {\n        id: func_role_nm\n        name: cli_func_role_als_nm\n      }\n      user: user_tbl {\n        first: fst_nm\n        last: lst_nm\n        id: user_id\n        alias: alt_user_id\n        email: email_id\n      }\n      createDate: creat_dttm\n      requestId: user_cli_func_role_req_id\n      status: user_cli_func_role_req_sts_ref_id\n      justification: req_jstfy_txt\n      tins: req_tins\n      approverDetails : req_aprv_dtl\n  \n      }\n    }","variables":{"limit":10,"offset":0,"where":{"cli_org_id":{"_in":["120"]},"user_cli_func_role_req_sts_ref_id":{"_eq":1},"_and":[{}]},"order":{"creat_dttm":"asc_nulls_last"}}}
+CREATE VIEW qom_workqueue_summary
+AS 
+SELECT 
+ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) as view_id,
+wq.workqueue_id, wq.workqueue_name, int.org_id,
+count(int.interaction_id) as cdo_based_tasks,
+SUM(count(int.interaction_id)) OVER (PARTITION BY wq.workqueue_id) as total_tasks
+from public.workqueue wq 
+JOIN public.qom_interactions int on wq.workqueue_id=int.workqueue_id
+WHERE int.int_status_id IN (1000882,1000936) 
+GROUP by (wq.workqueue_id,int.org_id);
+-- Here 1000882 and 1000936 is INPROGRESS AND SCHEDULED STATUS of INTERACTIONS 
