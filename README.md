@@ -1,1 +1,12 @@
-org.springframework.aop.framework.ProxyFactory: 3 interfaces [com.optum.ecp.curo.qom.jpa.repository.QomWQSummaryRepo, org.springframework.data.repository.Repository, org.springframework.transaction.interceptor.TransactionalProxy]; 8 advisors [org.springframework.aop.interceptor.ExposeInvocationInterceptor.ADVISOR, org.springframework.aop.support.DefaultPointcutAdvisor: pointcut [Pointcut.TRUE]; advice [org.springframework.data.jpa.repository.support.CrudMethodMetadataPostProcessor$CrudMethodMetadataPopulatingMethodInterceptor@47df068a], org.springframework.aop.support.DefaultPointcutAdvisor: pointcut [Pointcut.TRUE]; advice [org.springframework.dao.support.PersistenceExceptionTranslationInterceptor@12669200], org.springframework.aop.support.DefaultPointcutAdvisor: pointcut [Pointcut.TRUE]; advice [org.springframework.transaction.interceptor.TransactionInterceptor@5e1d11db], org.springframework.aop.support.DefaultPointcutAdvisor: pointcut [Pointcut.TRUE]; advice [org.springframework.data.projection.DefaultMethodInvokingMethodInterceptor@5c19194c], org.springframework.aop.support.DefaultPointcutAdvisor: pointcut [Pointcut.TRUE]; advice [org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor@63cdaf13], org.springframework.aop.support.DefaultPointcutAdvisor: pointcut [Pointcut.TRUE]; advice [org.springframework.data.repository.core.support.RepositoryFactorySupport$ImplementationMethodExecutionInterceptor@451dc7f8], org.springframework.dao.annotation.PersistenceExceptionTranslationAdvisor@7c588adc]; targetSource [SingletonTargetSource for target object [org.springframework.data.jpa.repository.support.SimpleJpaRepository@6e93f6ff]]; proxyTargetClass=false; optimize=false; opaque=false; exposeProxy=false; frozen=false
+CREATE OR REPLACE FUNCTION qom.create_interaction_view(dynamicValue INT)
+RETURNS VOID
+AS $$
+BEGIN
+    EXECUTE '
+    CREATE OR REPLACE VIEW qom.interaction_view AS
+    SELECT i.interaction_id, it.interaction_name, i.due_date, i.indv_id
+    FROM interaction i
+    JOIN interaction_type it ON i.interaction_type_id = it.interaction_type_id
+    WHERE i.workqueue_id = ' || dynamicValue;
+END;
+$$ LANGUAGE plpgsql;
