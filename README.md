@@ -178,3 +178,59 @@ from indv i join
 where indv_id>0 
 
 
+
+
+
+
+
+
+
+
+
+
+
+REF ID
+
+
+All Reference ID Mappings:
+Status Reference IDs (mbr_cmnct_sts_ref_id):
+* 24804: ELGS to OPS
+* 24805: OPS Disbursed
+* 24806: ELGS - OPS Error
+* 24810: OPS - OPS Error
+* 25060: ELGS Received
+* 25092: LMU - Dup GenID
+* 25107: Fax Disbursed
+* 25930: ELGS Reroute
+* 25962: Letter - Composition Success
+* 25970: Letter is Sent or Mailed
+* 25972: Letter sent for Print
+* 25973: Letter Sent for Fax
+* 25975: Letter - Archived
+* 25988: Translation In Progress
+* 25989: Translation Success
+* 25990: Translation Failed
+* 26988: CQ Fluency - Document Translated and Sent to Recipient
+* 27020: Processing
+Subject Type Reference IDs (mbr_cmnct_sbj_typ_ref_id):
+* 20783: MemberProgramId
+* 24850: interactionID
+* 24852: requestedUrgencyOfMailing
+* 25040: workgroupName
+* 25045: hscID
+* 25046: memberID
+* 25047: memberProgramID
+* 25056: vendorName
+* 25057: vendorTrackingID
+Attribute Type Reference IDs (mbr_cmnct_atr_typ_ref_id):
+* 25041: templateName
+* 25042: deliveryMethod
+Key Type Reference ID (mbr_cmnct_key_typ_ref_id):
+* 25052: letterTrackingID
+Category Reference IDs (mbr_cmnct_catgy_ref_id):
+* 20700: Welcome Packets
+* 20701: UTRY
+* 20715: Provider Letters
+* 20747: ROI/HIPAA
+* 20753: Care Plan Summary
+* 74006: Letter
